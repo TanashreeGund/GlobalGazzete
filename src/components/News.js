@@ -10,7 +10,6 @@ const News = (props) => {
   const [loading, setloading] = useState(true)
   const [page, setpage] = useState(1)
   const [totalResults, settotalResults] = useState(0)
-  // document.title = `${this.capitalizeFirstLetter(props.category)}-NationNews`;
   const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -21,7 +20,7 @@ const News = (props) => {
     setloading(true);
     let data = await fetch(url);
     let parsedData = await data.json();
-    //console.log(parsedData);
+    console.log(parsedData);
     setarticles(parsedData.articles);
     settotalResults(parsedData.totalResults)
     setloading(false);
@@ -29,45 +28,10 @@ const News = (props) => {
   }
 
   useEffect(() => {
+    document.title = `${capitalizeFirstLetter(props.category)}-NationNews`;
     updateNews();
+    //eslint-disable-next-line
   }, [])
-
-  const handleNextClick = async () => {
-    //   if(!(this.state.page+1 > Math.ceil(this.state.totalResults/props.pageSize))){
-    //     console.log("next");
-    //     let url= `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=807124407b4a44348d32b761ebdebaef&page=${this.state.page+1}&pageSize=${props.pageSize}`;
-    //     this.setState({loading: true});
-    //     let data=await fetch(url);
-    //     let parsedData=await data.json();
-    //     console.log(parsedData);
-    //     this.setState({
-    //       page:this.state.page+1,
-    //       articles:parsedData.articles,
-    //       loading: false
-    // })
-    // }
-    //consise the app
-    setpage(page+1);
-    updateNews();
-  }
-
-  const handlePrevClick = async () => {
-    //   console.log("prev");
-    //   let url= `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=807124407b4a44348d32b761ebdebaef&page=${this.state.page-1}&pageSize=${props.pageSize}`;
-    //   this.setState({loading: true})
-    //   let data=await fetch(url);
-    //   let parsedData=await data.json();
-    //   console.log(parsedData);
-    //   this.setState({
-    //     page:this.state.page-1,
-    //     articles:parsedData.articles,
-    //     loading: false
-    // });
-    
-    setpage(page-1)
-    updateNews();
-  }
-
 
   const fetchMoreData = async () => {
     let url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page+1}&pageSize=${props.pageSize}`;
@@ -75,7 +39,7 @@ const News = (props) => {
     let parsedData = await data.json();
     console.log(parsedData);
     setarticles(articles.concat(parsedData.articles))
-    setpage(page+1);
+    setpage(page + 1);
     settotalResults(parsedData.totalResults);
   };
 
